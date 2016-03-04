@@ -13,8 +13,12 @@ import java.util.NoSuchElementException;
  */
 public class BinarySearchTree<T extends Comparable<? super T>> implements SortedSet<T>
 {
-
+	public BinarySearchTree()
+	{
+		// TODO Auto-generated constructor stub
+	}
 	@Override
+	
 	public boolean add(T item)
 	{
 		// TODO Auto-generated method stub
