@@ -30,11 +30,21 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 
 		/**
 		 * 
-		 * @return True if the specified node is a leaf node (i.e. does not have any child nodes), returns false
-		 *         otherwise
+		 * @return The number of child nodes the node links to
 		 */
-		public boolean isLeaf() {
-			return (leftChild == null && rightChild == null);
+		public int numberOfChildren() {
+			if (this.leftChild == null && this.rightChild == null) {
+				return 0;
+			}
+			else if (this.leftChild != null && this.rightChild == null) {
+				return 1;
+			}
+			else if (this.leftChild == null && this.rightChild != null) {
+				return 1;
+			}
+			else {
+				return 2;
+			}
 		}
 
 		/**
@@ -82,6 +92,10 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	 */
 	public boolean add(T item) {
 
+		if (item == null) {
+			throw new NullPointerException();
+		}
+
 		// If there are no items currently in the tree, put the item into the root node
 		if (size == 0) {
 			this.root.item = item;
@@ -125,11 +139,14 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	 */
 	@Override
 	public boolean addAll(Collection<? extends T> items) {
+
 		for (T item : items) {
+			if (item == null) {
+				throw new NullPointerException();
+			}
 			if (!this.add(item)) {
 				return false;
 			}
-
 		}
 		return true;
 	}
@@ -139,12 +156,10 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	 */
 	@Override
 	public void clear() {
-		root.item = null;
 
-		BinaryNode<T> nothingLeft = null;
-		BinaryNode<T> nothingRight = null;
-		root.leftChild = nothingLeft;
-		root.rightChild = nothingRight;
+		root.item = null;
+		root.leftChild = null;
+		root.rightChild = null;
 		this.size = 0;
 	}
 
@@ -159,6 +174,10 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	 */
 	@Override
 	public boolean contains(T item) {
+
+		if (item == null) {
+			throw new NullPointerException();
+		}
 
 		BinaryNode<T> parentNode = BSTsearch(this.root, item);
 
@@ -195,10 +214,12 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	public boolean containsAll(Collection<? extends T> items) {
 
 		for (T item : items) {
+			if (item == null) {
+				throw new NullPointerException();
+			}
 			if (!this.contains(item)) {
 				return false;
 			}
-
 		}
 		return true;
 	}
@@ -211,22 +232,22 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	 */
 	@Override
 	public T first() throws NoSuchElementException {
-		
-		if (this.isEmpty()){
+
+		if (this.isEmpty()) {
 			throw new NoSuchElementException();
 		}
-		
-		if (size == 1){
+
+		if (size == 1) {
 			return root.item;
 		}
-		
+
 		BinaryNode<T> firstNode = root;
-		
+
 		// Retrieves the item in the far left node of the tree
-		while (firstNode.leftChild != null){
+		while (firstNode.leftChild != null) {
 			firstNode = firstNode.leftChild;
 		}
-		
+
 		return firstNode.item;
 	}
 
@@ -246,23 +267,33 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	 */
 	@Override
 	public T last() throws NoSuchElementException {
-		
-		if (this.isEmpty()){
+
+		if (this.isEmpty()) {
 			throw new NoSuchElementException();
 		}
-		
-		if (size == 1){
+
+		if (size == 1) {
 			return root.item;
 		}
-		
+
 		BinaryNode<T> lastNode = root;
-		
+
 		// Retrieves the item in the far right node of the tree
-		while (lastNode.rightChild != null){
+		while (lastNode.rightChild != null) {
 			lastNode = lastNode.rightChild;
 		}
-		
+
 		return lastNode.item;
+	}
+
+	private T getSmallest(BinaryNode<T> root) {
+
+		BinaryNode<T> smallestNode = root;
+
+		while (smallestNode.leftChild != null) {
+			smallestNode = smallestNode.leftChild;
+		}
+		return smallestNode.item;
 	}
 
 	/**
@@ -277,7 +308,93 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	 */
 	@Override
 	public boolean remove(T item) {
-		// TODO Auto-generated method stub
+
+		if (item == null) {
+			throw new NullPointerException();
+		}
+
+		BinaryNode<T> parentNode = BSTsearch(root, item);
+		BinaryNode<T> nodeToDelete = null;
+
+		// Determine which of the parent node's children is being deleted
+		if (parentNode.leftChild != null) {
+			if (parentNode.leftChild.item.equals(item)) {
+				nodeToDelete = parentNode.leftChild;
+			}
+		}
+		else {
+			if (parentNode.rightChild.item.equals(item)) {
+				nodeToDelete = parentNode.rightChild;
+			}
+			else {
+				return false;
+			}
+		}
+
+		// If we're deleting a leaf node
+		if (nodeToDelete.numberOfChildren() == 0) {
+
+			if (nodeToDelete.equals(parentNode.leftChild)) {
+				parentNode.leftChild = null;
+				size--;
+				return true;
+			}
+			else {
+				parentNode.rightChild = null;
+				size--;
+				return true;
+			}
+		}
+
+		// If we're deleting a node that has one child node
+		if (nodeToDelete.numberOfChildren() == 1) {
+
+			if (nodeToDelete.equals(parentNode.leftChild)) {
+
+				if (nodeToDelete.leftChild != null) {
+					parentNode.leftChild = nodeToDelete.leftChild;
+					size--;
+					return true;
+				}
+				else {
+					parentNode.leftChild = nodeToDelete.rightChild;
+					size--;
+					return true;
+				}
+			}
+			else {
+
+				if (nodeToDelete.leftChild != null) {
+					parentNode.rightChild = nodeToDelete.leftChild;
+					size--;
+					return true;
+				}
+				else {
+					parentNode.rightChild = nodeToDelete.rightChild;
+					size--;
+					return true;
+				}
+			}
+		}
+
+		// If we're deleting a node that has two child nodes
+		if (nodeToDelete.numberOfChildren() == 2) {
+
+			if (nodeToDelete.rightChild.numberOfChildren() == 0) {
+				nodeToDelete.item = nodeToDelete.rightChild.item;
+				nodeToDelete.rightChild = null;
+				size--;
+				return true;
+			}
+			else {
+				T smallestInRightSubtree = getSmallest(nodeToDelete.rightChild);
+				nodeToDelete.item = smallestInRightSubtree;
+				BSTsearch(nodeToDelete.rightChild, smallestInRightSubtree).leftChild = null;
+				size--;
+				return true;
+			}
+		}
+
 		return false;
 	}
 
@@ -293,8 +410,20 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	 */
 	@Override
 	public boolean removeAll(Collection<? extends T> items) {
-		// TODO Auto-generated method stub
-		return false;
+
+		int initialSize = size;
+
+		for (T item : items) {
+
+			if (item == null) {
+				throw new NullPointerException();
+			}
+			else {
+				remove(item);
+			}
+		}
+
+		return (initialSize != size);
 	}
 
 	/**
@@ -306,23 +435,25 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	}
 
 	/**
-	 * Recursive helper method for toArrayList method. Performs a depth-first, in-order traversal
-	 * of the tree to ensure that items are added to the ArrayList in the proper order.
+	 * Recursive helper method for toArrayList method. Performs a depth-first, in-order traversal of the tree to ensure
+	 * that items are added to the ArrayList in the proper order.
 	 * 
-	 * @param list - The ArrayList that the items will be added to
-	 * @param node - The root node of a tree or subtree
+	 * @param list
+	 *            - The ArrayList that the items will be added to
+	 * @param node
+	 *            - The root node of a tree or subtree
 	 */
-	private void addToArrayList(ArrayList<T> list, BinaryNode<T> node){
-		
-		if (node == null){
+	private void addToArrayList(ArrayList<T> list, BinaryNode<T> node) {
+
+		if (node == null) {
 			return;
 		}
-		
+
 		addToArrayList(list, node.leftChild);
 		list.add(node.item);
 		addToArrayList(list, node.rightChild);
 	}
-	
+
 	/**
 	 * Returns an ArrayList containing all of the items in this set, in sorted order.
 	 */
@@ -352,9 +483,13 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 		}
 
 		// If the item is found in either of the child nodes, return this parent.
-		if (node.leftChild != null && node.rightChild != null) {
-			if (newItem.equals(node.leftChild.item) || newItem.equals(node.rightChild.item)) {
-
+		if (node.leftChild != null) {
+			if (newItem.equals(node.leftChild.item)) {
+				return node;
+			}
+		}
+		if (node.rightChild != null) {
+			if (newItem.equals(node.rightChild.item)) {
 				return node;
 			}
 		}
@@ -363,10 +498,9 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 		if (newItem.compareTo(node.item) < 0) {
 
 			if (node.leftChild != null) {
-
 				return BSTsearch(node.leftChild, newItem);
-			} else {
-
+			}
+			else {
 				return node;
 			}
 		}
@@ -375,12 +509,10 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 		else if (newItem.compareTo(node.item) > 0) {
 
 			if (node.rightChild != null) {
-
 				return BSTsearch(node.rightChild, newItem);
 			}
 
 			else {
-
 				return node;
 			}
 		}
@@ -405,7 +537,8 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 			// Close the graph
 			output.println("}");
 			output.close();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -423,7 +556,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 		if (node.rightChild != null) {
 			// write the left subtree
 			writeDotRecursive(node.rightChild, output);
- 
+
 			// then make a link between n and the right subtree
 			output.println(node.item + ":R -> " + node.rightChild.item + ":D");
 		}
