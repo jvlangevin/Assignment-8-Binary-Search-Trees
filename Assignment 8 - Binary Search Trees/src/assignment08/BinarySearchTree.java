@@ -56,14 +56,33 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	 *             if the item is null
 	 */
 	public boolean add(T item) {
-		// TODO Auto-generated method stub
-		
+
 		// If there are no items currently in the tree, put the item into the root node
 		if (size == 0){
 			root.item = item;
 			size++;
 			return true;
 		}
+		
+		// Find the parent node that will link to the new node
+		BinaryNode<T> parentNode = BSTsearch(root, item);
+		
+		// If the item is less than the parent node, put it into the left child node
+		if (item.compareTo(parentNode.item) < 0){
+			parentNode.leftChild = new BinaryNode<>();
+			parentNode.leftChild.item = item;
+			size++;
+			return true;
+		}
+		
+		// If the item is greater than the parent node, put it into the right child node
+		if (item.compareTo(parentNode.item) > 0){
+			parentNode.rightChild = new BinaryNode<>();
+			parentNode.rightChild.item = item;
+			size++;
+			return true;
+		}
+		
 		return false;
 	}
 
