@@ -212,6 +212,20 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	@Override
 	public T first() throws NoSuchElementException {
 		// TODO Auto-generated method stub
+		
+		if (this.isEmpty()){
+			throw new NoSuchElementException();
+		}
+		
+		if (size == 1){
+			return root.item;
+		}
+		
+		BinaryNode<T> firstNode = root;
+		
+		while (root.leftChild != null){
+			
+		}
 		return null;
 	}
 
@@ -276,12 +290,32 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	}
 
 	/**
+	 * Recursive helper method for toArrayList method. Performs a depth-first, in-order traversal
+	 * of the tree to ensure that items are added to the ArrayList in the proper order.
+	 * 
+	 * @param list - The ArrayList that the items will be added to
+	 * @param node - The root node of a tree or subtree
+	 */
+	private void addToArrayList(ArrayList<T> list, BinaryNode<T> node){
+		
+		if (node == null){
+			return;
+		}
+		
+		addToArrayList(list, node.leftChild);
+		list.add(node.item);
+		addToArrayList(list, node.rightChild);
+	}
+	
+	/**
 	 * Returns an ArrayList containing all of the items in this set, in sorted order.
 	 */
 	@Override
 	public ArrayList<T> toArrayList() {
-		// TODO Auto-generated method stub
-		return null;
+
+		ArrayList<T> list = new ArrayList<>();
+		addToArrayList(list, root);
+		return list;
 	}
 
 	/**
