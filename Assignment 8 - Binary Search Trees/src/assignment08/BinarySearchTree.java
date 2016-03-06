@@ -64,23 +64,6 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 			size++;
 			return true;
 		}
-		
-		else{
-			BinaryNode<T> parentNode = BSTsearch(root, item);
-			
-			if (item.compareTo(parentNode.item) < 0){
-				parentNode.leftChild = new BinaryNode<>();
-				parentNode.leftChild.item = item;
-				size++;
-				return true;
-			}
-			if (item.compareTo(parentNode.item) > 0){
-				parentNode.rightChild = new BinaryNode<>();
-				parentNode.rightChild.item = item;
-				size++;
-				return true;
-			}
-		}
 		return false;
 	}
 
@@ -223,41 +206,5 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 		return null;
 	}
 	
-	private BinaryNode<T> BSTsearch(BinaryNode<T> node, T item){
-		
-		// If the specified node contains the item
-		if (item.equals(node.item)){
-			return node;
-		}
-		
-		// If the item is less than the specified node, proceed to the left child node
-		if (item.compareTo(node.item) < 0){
-			
-			if (node.leftChild != null){
-				return BSTsearch(node.leftChild, item);
-			}
-			
-			else{
-				return node;
-			}
-		}
-		
-		// If the item is greater than or equal to the specified node, proceed to the right child node
-		else if(item.compareTo(node.item) >= 0){
-			
-			if (node.rightChild != null){
-				return BSTsearch(node.rightChild, item);
-			}
-			
-			else{
-				return node;
-			}
-		}
-		
-		else{
-			return node;
-		}
-	}
 
-	
 }
