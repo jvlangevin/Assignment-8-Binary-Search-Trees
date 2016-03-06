@@ -211,7 +211,6 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	 */
 	@Override
 	public T first() throws NoSuchElementException {
-		// TODO Auto-generated method stub
 		
 		if (this.isEmpty()){
 			throw new NoSuchElementException();
@@ -223,10 +222,12 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 		
 		BinaryNode<T> firstNode = root;
 		
-		while (root.leftChild != null){
-			
+		// Retrieves the item in the far left node of the tree
+		while (firstNode.leftChild != null){
+			firstNode = firstNode.leftChild;
 		}
-		return null;
+		
+		return firstNode.item;
 	}
 
 	/**
@@ -245,8 +246,23 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	 */
 	@Override
 	public T last() throws NoSuchElementException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		if (this.isEmpty()){
+			throw new NoSuchElementException();
+		}
+		
+		if (size == 1){
+			return root.item;
+		}
+		
+		BinaryNode<T> lastNode = root;
+		
+		// Retrieves the item in the far right node of the tree
+		while (lastNode.rightChild != null){
+			lastNode = lastNode.rightChild;
+		}
+		
+		return lastNode.item;
 	}
 
 	/**
@@ -414,6 +430,6 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 
 	}
 
-
+	
 
 }
