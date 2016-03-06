@@ -423,7 +423,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 		if (node.rightChild != null) {
 			// write the left subtree
 			writeDotRecursive(node.rightChild, output);
-
+ 
 			// then make a link between n and the right subtree
 			output.println(node.item + ":R -> " + node.rightChild.item + ":D");
 		}
