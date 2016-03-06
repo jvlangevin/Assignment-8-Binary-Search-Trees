@@ -206,5 +206,38 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 		return null;
 	}
 	
+	private BinaryNode<T> BSTsearch (BinaryNode<T> node, T item){
+		
+		// If the item equals the specified node
+		if (item.equals(node.item)){
+			return node;
+		}
+		
+		// If the item is less than the specified node
+		if (item.compareTo(node.item) < 0){
+			if (node.leftChild != null){
+				return BSTsearch(node.leftChild, item);
+			}
+			else{
+				return node;
+			}
+		}
+		
+		// If the item is greater than the specified node
+		else if (item.compareTo(node.item) > 0){
+			
+			if (node.leftChild != null){
+				return BSTsearch(node.leftChild, item);
+			}
+			
+			else{
+				return node;
+			}
+		}
+		
+		else{
+			return node;
+		}
+	}
 
 }
