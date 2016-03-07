@@ -567,6 +567,37 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 
 	}
 
+	public static void main(String args[]) {
+
+		BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+
+		bst.add(5000);
+		 bst.add(2500);
+		 bst.add(1250);
+		 bst.add(3750);
+		 bst.add(625);
+		 bst.add(1875);
+		 bst.add(3125);
+		 bst.add(4375);
+//		bst.add(7500);
+//		bst.add(6350);
+//		bst.add(8750);
+//		bst.add(5725);
+//		bst.add(6975);
+//		bst.add(8125);
+//		bst.add(9375);
+		 
+		System.out.println(bst.contains(5000));
+		System.out.println(bst.contains(1250));
+		System.out.println(bst.contains(3750));
+		System.out.println(bst.contains(625));
+		System.out.println(bst.contains(1875));
+		System.out.println(bst.contains(3125));
+		System.out.println(bst.contains(4375));
+		System.out.println(bst.contains(1));
+
 	
+
+	}
 
 }
