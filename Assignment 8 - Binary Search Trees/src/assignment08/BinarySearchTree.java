@@ -29,8 +29,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 		}
 
 		/**
-		 * 
-		 * @return The number of child nodes the node links to
+		 * Helper method. Returns the number of child nodes a node points to.
 		 */
 		public int numberOfChildren() {
 			if (this.leftChild == null && this.rightChild == null) {
@@ -243,7 +242,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 
 		BinaryNode<T> firstNode = root;
 
-		// Retrieves the item in the far left node of the tree
+		// Retrieves the item in the far left node of the tree, since that will contain the smallest item
 		while (firstNode.leftChild != null) {
 			firstNode = firstNode.leftChild;
 		}
@@ -286,6 +285,11 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 		return lastNode.item;
 	}
 
+	/**
+	 * Helper method. Returns the smallest item in the subtree of the specified root node.
+	 * 
+	 * @param root - The root node of the subtree
+	 */
 	private T getSmallest(BinaryNode<T> root) {
 
 		BinaryNode<T> smallestNode = root;
@@ -466,7 +470,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	}
 
 	/**
-	 * Helper method designed to search through a binary search tree (bst) and return a specific node This allows for
+	 * Helper method designed to search through a binary search tree (bst) and return a specific node. This allows for
 	 * easier implementation of the add and contains method
 	 * 
 	 * @param node
