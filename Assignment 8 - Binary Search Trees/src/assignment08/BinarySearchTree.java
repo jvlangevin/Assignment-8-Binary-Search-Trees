@@ -319,6 +319,8 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 
 		BinaryNode<T> parentNode = BSTsearch(root, item);
 		BinaryNode<T> nodeToDelete = null;
+		
+		System.out.println(parentNode.item);
 
 		// Determine which of the parent node's children is being deleted
 		if (parentNode.leftChild != null) {
@@ -326,15 +328,24 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 				nodeToDelete = parentNode.leftChild;
 			}
 		}
-		else {
+		if(parentNode.rightChild != null){
 			if (parentNode.rightChild.item.equals(item)) {
 				nodeToDelete = parentNode.rightChild;
 			}
-			else {
-				return false;
-			}
+		}
+		//in case root is the item we are deleting. root is the only case when the node to delete is the parent node
+		if(parentNode.item.equals(item)) {
+			
+			nodeToDelete = parentNode;
+			
+		}
+		//if item is neither left, right or root, there's nothing to delete. we could switch to using contains instead
+		if (!this.contains(item)){
+			return false;
 		}
 
+		System.out.println(nodeToDelete.item);
+		
 		// If we're deleting a leaf node
 		if (nodeToDelete.numberOfChildren() == 0) {
 
@@ -343,15 +354,21 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 				size--;
 				return true;
 			}
-			else {
+			else if(nodeToDelete.equals(parentNode.rightChild)){
 				parentNode.rightChild = null;
 				size--;
 				return true;
 			}
+			
+			//essentially, if the node we're deleting is neither left or right 
+			//it's root and if root is a leaf and being removed, just clear the tree
+			else {
+				this.clear();
+			}
 		}
 
 		// If we're deleting a node that has one child node
-		if (nodeToDelete.numberOfChildren() == 1) {
+		else if (nodeToDelete.numberOfChildren() == 1) {
 
 			if (nodeToDelete.equals(parentNode.leftChild)) {
 
@@ -366,7 +383,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 					return true;
 				}
 			}
-			else {
+			else if (nodeToDelete.equals(parentNode.rightChild)){
 
 				if (nodeToDelete.leftChild != null) {
 					parentNode.rightChild = nodeToDelete.leftChild;
@@ -379,10 +396,22 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 					return true;
 				}
 			}
+			else {
+				if (nodeToDelete.leftChild != null) {
+					this.root = parentNode.leftChild;
+					size--;
+					return true;
+				}
+				else {
+					this.root = parentNode.rightChild;
+					size--;
+					return true;
+				}
+			}
 		}
 
 		// If we're deleting a node that has two child nodes
-		if (nodeToDelete.numberOfChildren() == 2) {
+		else if (nodeToDelete.numberOfChildren() == 2) {
 
 			if (nodeToDelete.rightChild.numberOfChildren() == 0) {
 				nodeToDelete.item = nodeToDelete.rightChild.item;

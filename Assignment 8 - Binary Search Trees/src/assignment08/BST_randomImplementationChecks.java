@@ -3,6 +3,7 @@ package assignment08;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,6 +16,12 @@ public class BST_randomImplementationChecks {
 		List<String> myArray = readFile(new File("dictionary.txt"));
 		BinarySearchTree<String> dictionary = new BinarySearchTree<String>();
 		dictionary.addAll(myArray);
+		
+		List<Integer> myIntArray = new ArrayList<Integer>();
+		myIntArray.addAll(generateAverageCase(30));
+		
+		BinarySearchTree<Integer> intTree = new BinarySearchTree<Integer>();
+		intTree.addAll(myIntArray);
 		
 		/*
 		 * If implemented correctly, these prints should return:
@@ -37,25 +44,17 @@ public class BST_randomImplementationChecks {
 		System.out.println(dictionary.getRoot().getLeftChild().getLeftChild().getRightChild().item); //returning null - incorrect should return macaroon
 
 		dictionary.clear();
-		System.out.println(dictionary.size());
-		System.out.println(dictionary.getRoot().item); //returning null after clear
-		System.out.println(dictionary.getRoot().getLeftChild()); //returning null after clear
-		System.out.println(dictionary.getRoot().getRightChild()); //returning null after clear
-		
-		dictionary.add("Jello");
-		dictionary.add("WhatTheWhat");
-		dictionary.add("Apple");
 		
 		
-		//Should now be Jello, Apple, WhatTheWhat
+		//test writing a tree of size 20 to see what it looks like as a dot graph
+		intTree.writeDot("intExample2-1.dot");
 		
-		System.out.println(dictionary.getRoot().item);
-		System.out.println(dictionary.getRoot().leftChild);
-		System.out.println(dictionary.getRoot().rightChild.item);
-		System.out.println(dictionary.getRoot().rightChild.leftChild);
-		System.out.println(dictionary.getRoot().rightChild.rightChild.item);
+		intTree.remove(12);
+		
+		intTree.writeDot("intExample2-2.dot");
 		
 	}
+	
 	
 	private static List<String> readFile(File file) {
 		ArrayList<String> words = new ArrayList<String>();
@@ -91,4 +90,18 @@ public class BST_randomImplementationChecks {
 
 		return words;
 	}
+	
+    public static ArrayList<Integer> generateAverageCase(int size){
+    	ArrayList<Integer> outputArray = generateBestCase(size);
+    	Collections.shuffle(outputArray);
+    	return outputArray;
+    }
+    
+    public static ArrayList<Integer> generateBestCase(int size){
+    	ArrayList<Integer> outputArray = new ArrayList<Integer>();
+    	for (int i = 0; i < size; i++){
+    		outputArray.add(i);
+    	}
+    	return outputArray;
+    }
 }
