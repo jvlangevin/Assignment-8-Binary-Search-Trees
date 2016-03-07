@@ -288,7 +288,8 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	/**
 	 * Helper method. Returns the smallest item in the subtree of the specified root node.
 	 * 
-	 * @param root - The root node of the subtree
+	 * @param root
+	 *            - The root node of the subtree
 	 */
 	private T getSmallest(BinaryNode<T> root) {
 
@@ -317,35 +318,33 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 			throw new NullPointerException();
 		}
 
-		BinaryNode<T> parentNode = BSTsearch(root, item);
-		BinaryNode<T> nodeToDelete = null;
-		
-		System.out.println(parentNode.item);
-
-		// Determine which of the parent node's children is being deleted
-		if (parentNode.leftChild != null) {
-			if (parentNode.leftChild.item.equals(item)) {
-				nodeToDelete = parentNode.leftChild;
-			}
-		}
-		if(parentNode.rightChild != null){
-			if (parentNode.rightChild.item.equals(item)) {
-				nodeToDelete = parentNode.rightChild;
-			}
-		}
-		//in case root is the item we are deleting. root is the only case when the node to delete is the parent node
-		if(parentNode.item.equals(item)) {
-			
-			nodeToDelete = parentNode;
-			
-		}
-		//if item is neither left, right or root, there's nothing to delete. we could switch to using contains instead
-		if (!this.contains(item)){
+		// if item is neither left, right or root, there's nothing to delete. we could switch to using contains instead
+		if (!this.contains(item)) {
 			return false;
 		}
 
-		System.out.println(nodeToDelete.item);
-		
+		BinaryNode<T> parentNode = BSTsearch(root, item);
+		BinaryNode<T> nodeToDelete = null;
+
+		// in case root is the item we are deleting. root is the only case when the node to delete is the parent node
+		if (parentNode.item.equals(item)) {
+			nodeToDelete = parentNode;
+		}
+
+		else {
+			// Determine which of the parent node's children is being deleted
+			if (parentNode.leftChild != null) {
+				if (parentNode.leftChild.item.equals(item)) {
+					nodeToDelete = parentNode.leftChild;
+				}
+			}
+			if (parentNode.rightChild != null) {
+				if (parentNode.rightChild.item.equals(item)) {
+					nodeToDelete = parentNode.rightChild;
+				}
+			}
+		}
+
 		// If we're deleting a leaf node
 		if (nodeToDelete.numberOfChildren() == 0) {
 
@@ -354,14 +353,14 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 				size--;
 				return true;
 			}
-			else if(nodeToDelete.equals(parentNode.rightChild)){
+			else if (nodeToDelete.equals(parentNode.rightChild)) {
 				parentNode.rightChild = null;
 				size--;
 				return true;
 			}
-			
-			//essentially, if the node we're deleting is neither left or right 
-			//it's root and if root is a leaf and being removed, just clear the tree
+
+			// essentially, if the node we're deleting is neither left or right
+			// it's root and if root is a leaf and being removed, just clear the tree
 			else {
 				this.clear();
 			}
@@ -383,7 +382,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 					return true;
 				}
 			}
-			else if (nodeToDelete.equals(parentNode.rightChild)){
+			else if (nodeToDelete.equals(parentNode.rightChild)) {
 
 				if (nodeToDelete.leftChild != null) {
 					parentNode.rightChild = nodeToDelete.leftChild;
@@ -510,9 +509,9 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	 */
 	private BinaryNode<T> BSTsearch(BinaryNode<T> node, T newItem) {
 
-		// if it's contained in the root, return root
-		if (newItem.equals(this.root.item)) {
-			return root;
+		// If the node that we've designated as the root contains the item, return the node
+		if (newItem.equals(node.item)) {
+			return node;
 		}
 
 		// If the item is found in either of the child nodes, return this parent.
@@ -593,39 +592,6 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 			// then make a link between n and the right subtree
 			output.println(node.item + ":R -> " + node.rightChild.item + ":D");
 		}
-
-	}
-
-	public static void main(String args[]) {
-
-		BinarySearchTree<Integer> bst = new BinarySearchTree<>();
-
-		bst.add(5000);
-		 bst.add(2500);
-		 bst.add(1250);
-		 bst.add(3750);
-		 bst.add(625);
-		 bst.add(1875);
-		 bst.add(3125);
-		 bst.add(4375);
-//		bst.add(7500);
-//		bst.add(6350);
-//		bst.add(8750);
-//		bst.add(5725);
-//		bst.add(6975);
-//		bst.add(8125);
-//		bst.add(9375);
-		 
-		System.out.println(bst.contains(5000));
-		System.out.println(bst.contains(1250));
-		System.out.println(bst.contains(3750));
-		System.out.println(bst.contains(625));
-		System.out.println(bst.contains(1875));
-		System.out.println(bst.contains(3125));
-		System.out.println(bst.contains(4375));
-		System.out.println(bst.contains(1));
-
-	
 
 	}
 
