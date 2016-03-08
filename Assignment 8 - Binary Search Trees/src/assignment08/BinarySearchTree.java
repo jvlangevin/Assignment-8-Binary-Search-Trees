@@ -420,7 +420,13 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 			}
 			else {
 				T smallestInRightSubtree = getSmallest(nodeToDelete.rightChild);
-				nodeToDelete.item = smallestInRightSubtree;
+				BinaryNode successorParent = BSTsearch(nodeToDelete.rightChild, smallestInRightSubtree);
+				if(successorParent.item == smallestInRightSubtree)
+				{
+					nodeToDelete.rightChild = successorParent.rightChild;
+					successorParent.rightChild = null;
+				}
+				nodeToDelete.item = smallestInRightSubtree;				
 				BSTsearch(nodeToDelete.rightChild, smallestInRightSubtree).leftChild = null;
 				size--;
 				return true;

@@ -18,7 +18,37 @@ public class BST_randomImplementationChecks {
 		dictionary.addAll(myArray);
 		
 		List<Integer> myIntArray = new ArrayList<Integer>();
-		myIntArray.addAll(generateAverageCase(30));
+		myIntArray.add(14);
+		myIntArray.add(7);
+		myIntArray.add(21);
+		myIntArray.add(3);
+		myIntArray.add(10);
+		myIntArray.add(17);
+		myIntArray.add(24);
+		myIntArray.add(1);
+		myIntArray.add(5);
+		myIntArray.add(2);
+		myIntArray.add(4);
+		myIntArray.add(6);
+		myIntArray.add(9);
+		myIntArray.add(8);
+		myIntArray.add(12);
+		myIntArray.add(11);
+		myIntArray.add(13);
+		myIntArray.add(15);
+		myIntArray.add(20);
+		myIntArray.add(16);
+		myIntArray.add(18);
+		myIntArray.add(19);
+		myIntArray.add(23);
+		myIntArray.add(22);
+		myIntArray.add(30);
+		myIntArray.add(27);
+		myIntArray.add(28);
+		myIntArray.add(29);
+		myIntArray.add(14);
+		myIntArray.add(25);
+	
 		
 		BinarySearchTree<Integer> intTree = new BinarySearchTree<Integer>();
 		intTree.addAll(myIntArray);
@@ -49,10 +79,15 @@ public class BST_randomImplementationChecks {
 		//test writing a tree of size 20 to see what it looks like as a dot graph
 		intTree.writeDot("intExample2-1.dot");
 		
-		intTree.remove(12);
+		intTree.remove(14);
 		
 		intTree.writeDot("intExample2-2.dot");
-		
+		/*
+		System.out.println(intTree.getRoot().item);
+		System.out.println(intTree.getRoot().leftChild.item);
+		System.out.println(intTree.getRoot().leftChild.rightChild.item);
+		System.out.println(intTree.getRoot().leftChild.leftChild.item);
+		*/
 	}
 	
 	
