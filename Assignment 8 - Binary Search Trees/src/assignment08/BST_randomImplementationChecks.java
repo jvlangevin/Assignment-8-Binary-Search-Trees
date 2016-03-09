@@ -65,23 +65,9 @@ public class BST_randomImplementationChecks {
 		 */
 		
 		System.out.println(dictionary.size());
-		System.out.println(dictionary.getRoot().item); //returning thief - correct.
-		System.out.println(dictionary.getRoot().getLeftChild().item); //returning macrosimulation - correct
-		System.out.println(dictionary.getRoot().getRightChild().item); //returning null incorrect, should return yawn
-		System.out.println(dictionary.getRoot().getLeftChild().getLeftChild().item); //returning luck - correct
-		System.out.println(dictionary.getRoot().getLeftChild().getRightChild().item); //returning null - incorrect, should return salesperson
-		System.out.println(dictionary.getRoot().getLeftChild().getLeftChild().getLeftChild().item); //returning dagger - correct
-		System.out.println(dictionary.getRoot().getLeftChild().getLeftChild().getRightChild().item); //returning null - incorrect should return macaroon
+		
+		dictionary.writeDot("dictionaryClear.dot");
 
-		dictionary.clear();
-		
-		
-		//test writing a tree of size 20 to see what it looks like as a dot graph
-		intTree.writeDot("intExample2-1.dot");
-		
-		intTree.remove(14);
-		
-		intTree.writeDot("intExample2-2.dot");
 		/*
 		System.out.println(intTree.getRoot().item);
 		System.out.println(intTree.getRoot().leftChild.item);
@@ -127,14 +113,22 @@ public class BST_randomImplementationChecks {
 	}
 	
     public static ArrayList<Integer> generateAverageCase(int size){
-    	ArrayList<Integer> outputArray = generateBestCase(size);
+    	ArrayList<Integer> outputArray = generateRightHeavy(size);
     	Collections.shuffle(outputArray);
     	return outputArray;
     }
     
-    public static ArrayList<Integer> generateBestCase(int size){
+    public static ArrayList<Integer> generateRightHeavy(int size){
     	ArrayList<Integer> outputArray = new ArrayList<Integer>();
-    	for (int i = 0; i < size; i++){
+    	for (int i = 1; i <= size; i++){
+    		outputArray.add(i);
+    	}
+    	return outputArray;
+    }
+    
+    public static ArrayList<Integer> generateLeftHeavy(int size){
+    	ArrayList<Integer> outputArray = new ArrayList<Integer>();
+    	for (int i = size; i >= 1; i--){
     		outputArray.add(i);
     	}
     	return outputArray;

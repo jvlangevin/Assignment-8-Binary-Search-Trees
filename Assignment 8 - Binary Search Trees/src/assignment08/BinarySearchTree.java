@@ -18,7 +18,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	private BinaryNode<T> root;
 	private int size;
 
-	public class BinaryNode<E> {
+	private class BinaryNode<E> {
 
 		E item;
 		BinaryNode<E> leftChild;
@@ -46,29 +46,9 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 			return children;
 		}
 
-		/**
-		 * helper class to check if items are being loaded correctly. to be deleted later
-		 * 
-		 * @return
-		 */
-
-		public BinaryNode<E> getLeftChild() {
-			return this.leftChild;
-		}
-
-		public BinaryNode<E> getRightChild() {
-			return this.rightChild;
-		}
 	}
 
-	/**
-	 * Helper method for viewing the binary tree info in testing, to be deleted later
-	 * 
-	 * @return
-	 */
-	public BinaryNode<T> getRoot() {
-		return this.root;
-	}
+
 
 	/**
 	 * Constructor
@@ -504,7 +484,9 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 		}
 
 		addToArrayList(list, node.leftChild);
-		list.add(node.item);
+		if(node.item != null){
+			list.add(node.item);
+		}
 		addToArrayList(list, node.rightChild);
 	}
 
