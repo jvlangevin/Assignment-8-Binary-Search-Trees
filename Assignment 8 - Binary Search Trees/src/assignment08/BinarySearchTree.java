@@ -32,18 +32,18 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 		 * Helper method. Returns the number of child nodes a node points to.
 		 */
 		public int numberOfChildren() {
-			if (this.leftChild == null && this.rightChild == null) {
-				return 0;
+
+			int children = 0;
+
+			if (this.leftChild != null) {
+				children++;
 			}
-			else if (this.leftChild != null && this.rightChild == null) {
-				return 1;
+
+			if (this.rightChild != null) {
+				children++;
 			}
-			else if (this.leftChild == null && this.rightChild != null) {
-				return 1;
-			}
-			else {
-				return 2;
-			}
+
+			return children;
 		}
 
 		/**
@@ -318,9 +318,15 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 			throw new NullPointerException();
 		}
 
-		// if item is neither left, right or root, there's nothing to delete. we could switch to using contains instead
+		// If the specified item is not in the tree, return false
 		if (!this.contains(item)) {
 			return false;
+		}
+		
+		// If there is only one item in the tree and the item is the one we're deleting, clear the tree
+		if (size == 1 && item.equals(root.item)){
+			clear();
+			return true;
 		}
 
 		BinaryNode<T> parentNode = BSTsearch(root, item);
@@ -332,6 +338,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 		}
 
 		else {
+			
 			// Determine which of the parent node's children is being deleted
 			if (parentNode.leftChild != null) {
 				if (parentNode.leftChild.item.equals(item)) {
@@ -359,11 +366,6 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 				return true;
 			}
 
-			// essentially, if the node we're deleting is neither left or right
-			// it's root and if root is a leaf and being removed, just clear the tree
-			else {
-				this.clear();
-			}
 		}
 
 		// If we're deleting a node that has one child node
@@ -412,21 +414,35 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 		// If we're deleting a node that has two child nodes
 		else if (nodeToDelete.numberOfChildren() == 2) {
 
+			// If the right child of the node we're deleting is a leaf node
 			if (nodeToDelete.rightChild.numberOfChildren() == 0) {
 				nodeToDelete.item = nodeToDelete.rightChild.item;
 				nodeToDelete.rightChild = null;
 				size--;
 				return true;
 			}
+			
 			else {
 				T smallestInRightSubtree = getSmallest(nodeToDelete.rightChild);
-				BinaryNode successorParent = BSTsearch(nodeToDelete.rightChild, smallestInRightSubtree);
-				if(successorParent.item == smallestInRightSubtree)
-				{
+				BinaryNode<T> successorParent = BSTsearch(nodeToDelete.rightChild, smallestInRightSubtree);
+
+				/*
+				 * If the root node of the right subtree contains the smallest item in the subtree
+				 * (i.e. if the right subtree is right-heavy)
+				 */
+				if (successorParent.item == smallestInRightSubtree) {
 					nodeToDelete.rightChild = successorParent.rightChild;
 					successorParent.rightChild = null;
+					nodeToDelete.item = smallestInRightSubtree;
+					size--;
+					return true;
 				}
-				nodeToDelete.item = smallestInRightSubtree;				
+				
+				/*
+				 * If the right subtree is not right-heavy, replace the item we're deleting with the smallest
+				 * item in the subtree and delete the leaf node
+				 */
+				nodeToDelete.item = smallestInRightSubtree;
 				BSTsearch(nodeToDelete.rightChild, smallestInRightSubtree).leftChild = null;
 				size--;
 				return true;
@@ -600,5 +616,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 		}
 
 	}
+
+
 
 }
