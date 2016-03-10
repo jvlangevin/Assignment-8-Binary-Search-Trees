@@ -192,6 +192,10 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 	@Override
 	public boolean containsAll(Collection<? extends T> items) {
 
+		if (items.isEmpty() && this.isEmpty()){
+			return true;
+		}
+		
 		for (T item : items) {
 			if (item == null) {
 				throw new NullPointerException();

@@ -191,15 +191,8 @@ public class BinarySearchTreeTest {
 		randomTree.removeAll(rightHeavy);
 		assertEquals(0, randomTree.size());
 		assertEquals(true, randomTree.isEmpty());
+		assertEquals(true, randomTree.containsAll(emptyArray));
 		
-		
-		//the contains method throws NullPointerException if the tree is empty regardless of value of i.
-		/*
-		for(int i = 1; i <= 1000; i++)
-		{
-			assertEquals(false, randomTree.contains(i));
-		}
-		*/
 	}
 	
 	@Test 
@@ -230,14 +223,14 @@ public class BinarySearchTreeTest {
 		
 		assertEquals(0, testTree.size());
 		
-		int value = testTree.first();
+		testTree.first();
 	}
 	
 	@Test (expected = NoSuchElementException.class)
 	public void testTreeGetLastWhileEmptyNoSuchElement(){
 		assertEquals(0, testTree.size());
 		
-		int value = testTree.last();
+		testTree.last();
 		
 	}
 	
