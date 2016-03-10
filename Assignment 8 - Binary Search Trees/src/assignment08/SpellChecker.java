@@ -10,7 +10,7 @@ import java.util.Scanner;
  * Represents a "dictionary" of strings using a binary search tree and offers
  * methods for spell-checking documents.
  * 
- * @author
+ * @author Nathan Novak (u0347907), Jason Langevin
  */
 public class SpellChecker {
 
@@ -52,7 +52,7 @@ public class SpellChecker {
 	 *            - the String to be added to the dictionary
 	 */
 	public void addToDictionary(String word) {
-		dictionary.add(word);
+		dictionary.add(word.toLowerCase());
 	}
 
 	/**

@@ -7,6 +7,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+
+/**
+ * A generic file for testing method implementations
+ * @author Nathan
+ *
+ */
 public class BST_randomImplementationChecks {
 
 	public static <E> void main(String[] args){

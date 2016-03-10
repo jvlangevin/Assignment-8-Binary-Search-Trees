@@ -10,6 +10,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+
+/**
+ * A JUnit test file
+ * @author Nathan Novak (u0347907), Jason Langevin
+ *
+ */
 public class BinarySearchTreeTest {
 
 	ArrayList<Integer> rightHeavy; //@Before cases makes this an array of 1 - 1000

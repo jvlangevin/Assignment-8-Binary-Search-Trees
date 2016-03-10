@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 /**
  * A binary search tree consisting of generic elements.
  * 
- * @author
+ * @author Nathan Novak (u0347907), Jason Langevin
  *
  * @param <T>
  */
